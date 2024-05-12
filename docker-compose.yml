@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:12.2
+    restart: on-failure:3
+    environment:
+      - POSTGRES_DB=db_alvo_certo
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=4lv0C3rt0!!@
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./:/docker-entrypoint-initdb.d
+volumes:
+  db:
+    driver: local
