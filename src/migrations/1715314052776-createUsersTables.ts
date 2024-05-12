@@ -1,5 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-console.log('\n\n\n Inicio da execução da Migration CreateUsersTable1657222882811');
+console.log(
+  '\n\n\n Inicio da execução da Migration CreateUsersTable1657222882811',
+);
 
 export class CreateUsersTable1715314052776 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -67,7 +69,9 @@ export class CreateUsersTable1715314052776 implements MigrationInterface {
       }),
     );
 
-    await queryRunner.query(`ALTER TABLE public.tb_users ALTER COLUMN "role" SET DEFAULT 'USER';`);
+    await queryRunner.query(
+      `ALTER TABLE public.tb_users ALTER COLUMN "role" SET DEFAULT 'USER';`,
+    );
 
     console.log('Fim da execução da Migration CreateUsersTable1657222882811');
   }
