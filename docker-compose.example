@@ -3,9 +3,9 @@ services:
     image: postgres:12.2
     restart: on-failure:3
     environment:
-      - POSTGRES_DB=db_alvo_certo
+      - POSTGRES_DB=db
       - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=4lv0C3rt0!!@
+      - POSTGRES_PASSWORD=123456
     ports:
       - "5432:5432"
     volumes:

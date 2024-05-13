@@ -41,3 +41,4 @@ lerna-debug.log*
 package-lock.json
 
 anotation.md
+docker-compose.yml
