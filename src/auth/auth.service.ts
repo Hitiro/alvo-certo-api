@@ -4,7 +4,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { LoginUserDto } from './dto/login-user.dto';
-import { RefreshUserDto } from './dto/refresh-user.dto';
 import { UserService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/users/entities/user.entity';
@@ -40,5 +39,11 @@ export class AuthService {
     delete user.password;
     delete user.role;
     return { user, token };
+  }
+
+  async decodeToken(token: string) {
+    const data = this.jwtService.decode(token);
+    console.log(data);
+    return data;
   }
 }
