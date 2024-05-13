@@ -1,4 +1,3 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import 'dotenv/config';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
