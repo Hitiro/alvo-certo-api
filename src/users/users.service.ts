@@ -53,9 +53,6 @@ export class UserService {
     const updatedUser = await this.userRepository.save(user);
     delete updatedUser.password;
 
-    console.log(user);
-    console.log(updatedUser);
-
     return updatedUser;
   }
 

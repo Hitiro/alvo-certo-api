@@ -63,4 +63,8 @@ export class CreateUserProfileDto {
   @IsNotEmpty()
   @Length(2)
   estado: string;
+
+  @IsNumber()
+  @IsOptional()
+  user_id: number;
 }

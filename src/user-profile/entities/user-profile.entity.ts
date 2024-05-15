@@ -55,6 +55,9 @@ export class UserProfile {
   @ApiProperty()
   estado: string;
 
+  @Column()
+  user_id: number;
+
   @OneToOne(() => User, (user) => user.id, {
     cascade: true,
     onDelete: 'CASCADE',
