@@ -7,6 +7,7 @@ import { typeOrmConfig } from '../ormconfig';
 import { UserModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { UserProfileModule } from './user-profile/user-profile.module';
+import { FindCnpjModule } from './find-cnpj/find-cnpj.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UserProfileModule } from './user-profile/user-profile.module';
     UserModule,
     AuthModule,
     UserProfileModule,
+    FindCnpjModule,
   ],
   controllers: [AppController],
   providers: [AppService],
