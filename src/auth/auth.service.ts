@@ -32,12 +32,13 @@ export class AuthService {
       throw new UnauthorizedException('Senha inválida');
     }
 
-    const payload = { userId: user.id, username: user.email };
+    const payload = { userId: user.id, username: user.email, role: user.role };
 
     const token = await this.jwtService.signAsync(payload);
     delete user.id;
     delete user.password;
     delete user.role;
+    delete user.active;
     return { user, token };
   }
 

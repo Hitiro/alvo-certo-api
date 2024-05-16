@@ -8,6 +8,9 @@ import { UserModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { UserProfileModule } from './user-profile/user-profile.module';
 import { FindCnpjModule } from './find-cnpj/find-cnpj.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './infra/guards/roles.guard';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -17,8 +20,15 @@ import { FindCnpjModule } from './find-cnpj/find-cnpj.module';
     AuthModule,
     UserProfileModule,
     FindCnpjModule,
+    JwtModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}
