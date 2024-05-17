@@ -15,6 +15,5 @@
   "semi": true,
   "useTabs": false,
   "vueIndentScriptAndStyle": true,
-  "tabWidth": 2,
-  "endOfLine": "lf"
+  "tabWidth": 2
 }
