@@ -26,4 +26,8 @@ export class ExtractOfUser {
   @Column()
   @ApiProperty()
   id_usuario: number;
+
+  @Column()
+  @ApiProperty()
+  observacao: string;
 }
