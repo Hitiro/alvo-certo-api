@@ -1,4 +1,10 @@
-import { IsArray, IsNotEmpty, IsString, Length } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class CreateFindCnpjDto {
   @IsString()
@@ -9,8 +15,13 @@ export class CreateFindCnpjDto {
   @IsArray()
   @IsNotEmpty()
   pesquisar: searchFields[];
+
+  @IsNumber()
+  @IsNotEmpty()
+  id_tipo_consulta: number;
 }
 
+// TODO: Tratar no banco de dados.
 export enum searchFields {
   'NOME FANTASIA' = 1,
   'RAZAO SOCIAL',

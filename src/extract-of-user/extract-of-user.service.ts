@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { CreateExtractOfUserDto } from './dto/create-extract-of-user.dto';
-import { UpdateExtractOfUserDto } from './dto/update-extract-of-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ExtractOfUser } from './entities/extract-of-user.entity';
 import { Repository } from 'typeorm';
 import { AddAmountUser } from './dto/balance-extract-of-user.dto';
-import { UserService } from 'src/users/users.service';
-import { ShowUserDto } from 'src/users/dto/show-user.dto';
+import { UserService } from 'users/users.service';
+import { ShowUserDto } from 'users/dto/show-user.dto';
 
 @Injectable()
 export class ExtractOfUserService {
@@ -21,39 +20,38 @@ export class ExtractOfUserService {
     user: ShowUserDto,
     ip: string,
   ) {
-    const {
-      id: userId,
-      name,
-      email,
-    } = await this.dataOfUser.findOneByEmail(addAmountUser.reciveUser);
+    const { id: reciverId } = await this.dataOfUser.findOneByEmail(
+      addAmountUser.reciveUser,
+    );
 
     const existingExtracts = await this.extractOfUserRepository.find({
-      where: { id_usuario: userId },
+      where: { id_usuario: reciverId },
       order: { id: 'ASC' },
     });
 
     let finalBalance: number;
+
     if (existingExtracts.length === 0) {
-      finalBalance = 0;
+      finalBalance = addAmountUser.amount;
     } else {
       const lastExtract = existingExtracts[existingExtracts.length - 1];
       finalBalance = lastExtract.saldo + addAmountUser.amount;
     }
 
     const newExtract = this.extractOfUserRepository.create({
-      observacao: `RECARGA MANUAL FEITA PELO ${user.username}`,
+      observacao: `${addAmountUser.amount} RECARGA MANUAL FEITA PELO ${user.role} ${user.username} ID: ${user.userId}`,
       saldo: finalBalance,
       valor: addAmountUser.amount,
       ip_origem: ip,
-      id_usuario: user.userId,
+      id_usuario: reciverId,
     });
 
     const savedData = await this.extractOfUserRepository.save(newExtract);
-
     return savedData;
   }
 
   create(createExtractOfUserDto: CreateExtractOfUserDto) {
+    console.log(createExtractOfUserDto);
     return 'This action adds a new extractOfUser';
   }
 
@@ -65,7 +63,25 @@ export class ExtractOfUserService {
     return `This action returns a #${id} extractOfUser`;
   }
 
-  findByUser(id: number) {
-    return `retorna todo o extrato de um usuário`;
+  async findByUser(email: string) {
+    const { id: userId } = await this.dataOfUser.findOneByEmail(email);
+
+    const existingExtracts = await this.extractOfUserRepository.find({
+      where: { id_usuario: userId },
+      order: { id: 'DESC' },
+    });
+
+    return `${existingExtracts}`;
+  }
+
+  async getCurrentBalance(userId: number): Promise<number> {
+    const lastExtract = await this.extractOfUserRepository.findOne({
+      where: { id_usuario: userId },
+      order: { id: 'DESC' },
+    });
+
+    if (!lastExtract) return 0;
+
+    return lastExtract.saldo;
   }
 }

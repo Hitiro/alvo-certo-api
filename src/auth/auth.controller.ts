@@ -1,18 +1,13 @@
 import {
   Controller,
-  Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/login-user.dto';
-import { RefreshUserDto } from './dto/refresh-user.dto';
-import { User } from 'src/users/entities/user.entity';
+import { User } from 'users/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
