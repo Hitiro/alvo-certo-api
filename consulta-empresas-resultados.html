@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleção de Dados</title>
+    <link rel="stylesheet" href="consulta-empresas-resultados.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Seleção de Dados</h1>
+        <form id="data-selection-form">
+            <div class="data-group-container">
+                <div class="data-group">
+                    <h2>Dados Institucionais</h2>
+                    <ul>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> Dados Básicos</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> E-mails</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> Endereços</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> Telefones</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox all" value="1"> Todos</label></li>
+                    </ul>
+                </div>
+                <div class="data-group">
+                    <h2>Dados de Pessoas Relacionadas</h2>
+                    <ul>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> Dados Básicos</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> E-mails</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> Endereços</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> Telefones</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox all" value="1"> Todos</label></li>
+                    </ul>
+                </div>
+                <div class="data-group">
+                    <h2>Comportamento e Reputação</h2>
+                    <ul>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> Doações Eleitorais</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> Exposição na Mídia</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> Processos</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox all" value="1"> Todos</label></li>
+                    </ul>
+                </div>
+                <div class="data-group">
+                    <h2>Crédito</h2>
+                    <ul>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> Score de Crédito</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox" value="1"> Risco de Crédito</label></li>
+                        <li><label><input type="checkbox" class="data-checkbox all" value="1"> Todos</label></li>
+                    </ul>
+                </div>
+            </div>
+            <p id="credit-usage">Sua solicitação irá consumir um total de 0 créditos</p>
+            <button type="submit">Confirmar</button>
+        </form>
+    </div>
+    <script>
+        const allCheckboxes = document.querySelectorAll('.data-checkbox.all');
+        const creditUsageElement = document.getElementById('credit-usage');
+        let totalCredits = 0;
+
+        allCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const group = this.closest('.data-group');
+                const checkboxes = group.querySelectorAll('.data-checkbox:not(.all)');
+                checkboxes.forEach(cb => cb.checked = this.checked);
+                updateCreditUsage();
+            });
+        });
+
+        const checkboxes = document.querySelectorAll('.data-checkbox:not(.all)');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateCreditUsage);
+        });
+
+        function updateCreditUsage() {
+            totalCredits = 0;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) totalCredits++;
+            });
+            creditUsageElement.textContent = `Sua solicitação irá consumir um total de ${totalCredits} créditos`;
+        }
+    </script>
+</body>
+</html>

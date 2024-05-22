@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar Pessoas</title>
+    <link rel="stylesheet" href="consultar-pessoas.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Consultar Pessoas</h1>
+        <form id="search-form" action="consultar-pessoas-resultados.html" method="GET">
+            <div class="form-group">
+                <label for="search-key">Chaves de Busca:</label>
+                <select id="search-key" name="search-key" class="small-select" required>
+                    <option value="cpf">CPF</option>
+                    <option value="name">Nome</option>
+                    <option value="email">E-mail</option>
+                    <option value="phone">Telefone</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="search-value">Valor:</label>
+                <input type="text" id="search-value" name="search-value" placeholder="Digite o valor correspondente" required>
+            </div>
+            <div class="form-group" id="dob-group" style="display: none;">
+                <label for="dob">Data de Nascimento:</label>
+                <input type="text" id="dob" name="dob" placeholder="00/00/0000" maxlength="10">
+            </div>
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
+    <script>
+        const searchKey = document.getElementById('search-key');
+        const searchValue = document.getElementById('search-value');
+        const dobGroup = document.getElementById('dob-group');
+        const dobInput = document.getElementById('dob');
+
+        searchKey.addEventListener('change', function() {
+            switch (this.value) {
+                case 'cpf':
+                    searchValue.placeholder = '000.000.000-00';
+                    dobGroup.style.display = 'none';
+                    break;
+                case 'name':
+                    searchValue.placeholder = 'Nome completo do indivíduo';
+                    dobGroup.style.display = 'block';
+                    break;
+                case 'email':
+                    searchValue.placeholder = 'nome@exemplo.com';
+                    dobGroup.style.display = 'none';
+                    break;
+                case 'phone':
+                    searchValue.placeholder = '(00) 00000-0000';
+                    dobGroup.style.display = 'none';
+                    break;
+                default:
+                    searchValue.placeholder = 'Digite o valor correspondente';
+                    dobGroup.style.display = 'none';
+                    break;
+            }
+        });
+
+        dobInput.addEventListener('input', function() {
+            const input = dobInput.value.replace(/\D/g, '');
+            const day = input.substring(0, 2);
+            const month = input.substring(2, 4);
+            const year = input.substring(4, 8);
+            if (input.length > 4) {
+                dobInput.value = `${day}/${month}/${year}`;
+            } else if (input.length > 2) {
+                dobInput.value = `${day}/${month}`;
+            } else if (input.length > 0) {
+                dobInput.value = `${day}`;
+            }
+        });
+
+        searchValue.addEventListener('input', function() {
+            if (searchKey.value === 'name') {
+                searchValue.value = searchValue.value.toUpperCase();
+            } else if (searchKey.value === 'phone') {
+                let input = searchValue.value.replace(/\D/g, '');
+                if (input.length > 11) {
+                    input = input.substring(0, 11);
+                }
+                const part1 = input.substring(0, 2);
+                const part2 = input.substring(2, 7);
+                const part3 = input.substring(7, 11);
+                if (input.length > 7) {
+                    searchValue.value = `(${part1}) ${part2}-${part3}`;
+                } else if (input.length > 2) {
+                    searchValue.value = `(${part1}) ${part2}`;
+                } else if (input.length > 0) {
+                    searchValue.value = `(${part1}`;
+                }
+            } else if (searchKey.value === 'cpf') {
+                let input = searchValue.value.replace(/\D/g, '');
+                if (input.length > 11) {
+                    input = input.substring(0, 11);
+                }
+                const part1 = input.substring(0, 3);
+                const part2 = input.substring(3, 6);
+                const part3 = input.substring(6, 9);
+                const part4 = input.substring(9, 11);
+                if (input.length > 9) {
+                    searchValue.value = `${part1}.${part2}.${part3}-${part4}`;
+                } else if (input.length > 6) {
+                    searchValue.value = `${part1}.${part2}.${part3}`;
+                } else if (input.length > 3) {
+                    searchValue.value = `${part1}.${part2}`;
+                } else if (input.length > 0) {
+                    searchValue.value = `${part1}`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

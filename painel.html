@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel</title>
+    <link rel="stylesheet" href="painel.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo-container">
+                <img src="teste3.jpg" alt="Logo Alvo Certo" class="logo">
+            </div>
+            <ul>
+                <li>
+                    <a href="consultar-pessoas.html">
+                        <img src="icons/pessoas.svg" alt="Icone Pessoas" width="27" height="16">
+                        Consultar Pessoas
+                    </a>
+                </li>
+                <li>
+                    <a href="consultar-empresas.html">
+                        <img src="icons/empresas.svg" alt="Icone Empresas" width="27" height="16">
+                        Consultar Empresas
+                    </a>
+                </li>
+                <li>
+                    <a href="consultar-processos.html">
+                        <img src="icons/processos.svg" alt="Icone Processos" width="27" height="16">
+                        Consultar Processos
+                    </a>
+                </li>
+                <li>
+                    <a href="consultar-veiculos.html">
+                        <img src="icons/veiculos.svg" alt="Icone Veiculos" width="27" height="16">
+                        Consultar Veículos
+                    </a>
+                </li>
+                <li>
+                    <a href="consultar-enderecos.html">
+                        <img src="icons/enderecos.svg" alt="Icone Enderecos" width="27" height="16">
+                        Consultar Endereços
+                    </a>
+                </li>
+                <li>
+                    <a href="historico.html">
+                        <img src="icons/historico.svg" alt="Icone Historico" width="27" height="16">
+                        Histórico
+                    </a>
+                </li>
+                <li>
+                    <a href="pacotes.html">
+                        <img src="icons/pacotes.svg" alt="Icone Pacotes" width="27" height="16">
+                        Pacotes (de créditos)
+                    </a>
+                </li>
+                <li>
+                    <a href="perfil.html">
+                        <img src="icons/perfil.svg" alt="Icone Perfil" width="27" height="16">
+                        Perfil
+                    </a>
+                </li>
+                <li>
+                    <a href="suporte.html">
+                        <img src="icons/suporte.svg" alt="Icone Suporte" width="27" height="16">
+                        Suporte
+                    </a>
+                </li>
+                <li>
+                    <a href="logout.html">
+                        <img src="icons/sair.svg" alt="Icone Sair" width="27" height="16">
+                        Sair
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <h1>Painel</h1>
+            <p>Bem vindo ao sistema Alvo Certo</p>
+            <div class="col block">
+                <h3>Total de créditos disponíveis</h3>
+                <div style="margin:auto; text-align:center;">
+                    <p class="mt-4 mb-4">
+                        <svg width="16" height="16" viewBox="0 0 16 16" class="bi bi-exclamation-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"></path>
+                        </svg>&nbsp;&nbsp;Você não possui nenhum crédito disponível para consultas.
+                    </p>
+                    Adquira um pacote de créditos agora!<p></p>
+                    <form id="back" method="GET" action="pacotes.html">
+                        <button class="btn w-100" type="submit">Ver pacotes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
