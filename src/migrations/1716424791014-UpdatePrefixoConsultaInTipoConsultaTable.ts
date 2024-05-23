@@ -5,7 +5,7 @@ export class UpdatePrefixoConsultaInTipoConsultaTable1716424791014
 {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-      ALTER TABLE tb_tipo_consulta DISABLE TRIGGER all;
+    ALTER TABLE tb_tipo_consulta DISABLE TRIGGER all;
 
     WITH tmp AS (
         SELECT id, prefixo_consulta, SUBSTRING(prefixo_consulta, 1, LENGTH(prefixo_consulta) - 1) AS newname
@@ -13,7 +13,7 @@ export class UpdatePrefixoConsultaInTipoConsultaTable1716424791014
         WHERE prefixo_consulta LIKE '%-'
     )
 
-    UPDATE tb_tipo_consulta set prefixo_consulta = tmp.newname, criado_por = 1 from tmp WHERE tb_tipo_consulta.id = tmp.id;
+    UPDATE tb_tipo_consulta set prefixo_consulta = tmp.newname from tmp WHERE tb_tipo_consulta.id = tmp.id;
     
     ALTER TABLE tb_tipo_consulta ENABLE TRIGGER all;
 `);
