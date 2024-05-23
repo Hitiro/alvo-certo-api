@@ -84,4 +84,16 @@ export class ExtractOfUserService {
 
     return lastExtract.saldo;
   }
+
+  // async getExtractByCustomDate(startDate: Date, endDate: Date) {
+  //   return this.extractOfUserRepository
+  //     .createQueryBuilder()
+  //     .select()
+  //     .from('vw_extrato_custom_date', 'extract')
+  //     .where('extract.data BETWEEN :startDate AND :endDate', {
+  //       startDate,
+  //       endDate,
+  //     })
+  //     .getRawMany();
+  // }
 }

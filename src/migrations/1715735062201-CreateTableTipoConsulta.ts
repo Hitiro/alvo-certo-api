@@ -80,11 +80,11 @@ export class CreateTipoConsultaTable1715314052811
     // Inserindo dados iniciais
     await queryRunner.query(
       `INSERT INTO tb_tipo_consulta (nome_consulta, prefixo_consulta, ativo, criado_por) VALUES
-      ('Consultar Pessoas', 'PES-', true, 1),
-      ('Consultar Empresas', 'EMP-', true, 1),
-      ('Consultar Processos', 'PROC-', true, 1),
-      ('Consultar Veículos', 'VEIC-', true, 1),
-      ('Consultar Endereços', 'END-', true, 1);`,
+      ('Consultar Pessoas', 'PES', true, 1),
+      ('Consultar Empresas', 'EMP', true, 1),
+      ('Consultar Processos', 'PROC', true, 1),
+      ('Consultar Veículos', 'VEIC', true, 1),
+      ('Consultar Endereços', 'END', true, 1);`,
     );
 
     await queryRunner.query(`

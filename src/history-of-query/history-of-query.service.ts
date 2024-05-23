@@ -16,11 +16,10 @@ export class HistoryOfQueryService {
     createHistoryOfQueryDto: CreateHistoryOfQueryDto,
     ip: string,
   ): Promise<HistoryOfQuery> {
-    await this.historyOfQuery.query(
-      `SELECT set_config('myapp.client_ip', $1, true)`,
-      [ip],
-    );
-    const data = await this.historyOfQuery.create(createHistoryOfQueryDto);
+    const data = await this.historyOfQuery.create({
+      ...createHistoryOfQueryDto,
+      ip_origem: ip,
+    });
     const history = await this.historyOfQuery.save(data);
     return history;
   }

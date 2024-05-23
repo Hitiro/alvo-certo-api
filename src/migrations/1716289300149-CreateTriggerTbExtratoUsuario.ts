@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateTriggerAfterInsertHistoricoConsulta1716249300149
+export class CreateTriggerAfterInsertHistoricoConsulta1716289300149
   implements MigrationInterface
 {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -18,9 +18,6 @@ export class CreateTriggerAfterInsertHistoricoConsulta1716249300149
         ip_origem varchar(255);
         saldo_anterior int;
       BEGIN
-        -- Obtendo o IP de origem através de uma variável de sessão passada pelo HistoryOfQueryService
-        ip_origem := current_setting('myapp.client_ip', true);
-
         -- Obtendo o saldo anterior
         saldo_anterior := COALESCE(
           (SELECT saldo FROM tb_extrato_usuario WHERE id_usuario = NEW.consultado_por ORDER BY id DESC LIMIT 1),
@@ -37,7 +34,7 @@ export class CreateTriggerAfterInsertHistoricoConsulta1716249300149
         )
         VALUES (
           NEW.id,
-          ip_origem,
+          NEW.ip_origem,
           - NEW.custo,
           saldo_anterior - NEW.custo,
           NEW.consultado_por

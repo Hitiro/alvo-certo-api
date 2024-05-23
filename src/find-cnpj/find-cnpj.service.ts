@@ -95,14 +95,13 @@ export class FindCnpjService {
     );
 
     const savedHistory = await this.historyOfQueryService.create(history, ip);
-    console.log(`\n Histórico salvo : ${JSON.stringify(savedHistory)} \n`);
 
     const resultado = {
       message: 'Consulta realizada com suceso',
       Success: true,
       resultado: result,
     };
-    return resultado;
+    return { resultado: resultado, savedHistory: savedHistory };
   }
 }
 

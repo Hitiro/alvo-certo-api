@@ -43,7 +43,7 @@ export class CreateTableExtratoUsuario1715984558421
           },
           {
             name: 'ip_origem',
-            type: 'varchar(255)',
+            type: 'varchar(50)',
             isNullable: false,
           },
           {
@@ -87,10 +87,10 @@ export class CreateTableExtratoUsuario1715984558421
       }),
     );
 
-    console.log('Tabela tb_extrato_consulta_tipo criada com sucesso!');
+    console.log('Tabela tb_extrato_usuario criada com sucesso!');
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('tb_extrato_consulta_tipo');
+    await queryRunner.dropTable('tb_extrato_usuario');
   }
 }

@@ -26,4 +26,8 @@ export class HistoryOfQuery {
   @Column()
   @ApiProperty()
   consultado_por: number;
+
+  @Column()
+  @ApiProperty()
+  ip_origem: string;
 }
