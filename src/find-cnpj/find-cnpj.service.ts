@@ -31,7 +31,7 @@ export class FindCnpjService {
     user: ShowUserDto,
     ip: string,
   ) {
-    const cnpj = createFindCnpjDto.cpfcnpj;
+    const cnpj = createFindCnpjDto.cnpj;
     const selectedFields = createFindCnpjDto.pesquisar.map(
       (field) => searchFields[field],
     );
@@ -46,14 +46,6 @@ export class FindCnpjService {
     const { prefixo_consulta: prefix } = await this.typeOfQuery.findOne(
       createFindCnpjDto.id_tipo_consulta,
     );
-
-    const history: CreateHistoryOfQueryDto = {
-      id_tipo_consulta: createFindCnpjDto.id_tipo_consulta,
-      chave: prefix,
-      conjunto_dados: createFindCnpjDto.pesquisar.toString(),
-      custo: cost,
-      consultado_por: user.userId,
-    };
 
     const saldo = await this.extractOfUserService.getCurrentBalance(
       user.userId,
@@ -86,7 +78,7 @@ export class FindCnpjService {
           catchError(async (error: AxiosError) => {
             this.logger.error(error);
             throw new BadRequestException({
-              Message: 'Erro ao atualizar buscar CNPJ',
+              Message: 'Erro ao pesquisar buscar CNPJ',
               MessageError: error.message,
               Success: false,
             });
@@ -94,13 +86,27 @@ export class FindCnpjService {
         ),
     );
 
-    const savedHistory = await this.historyOfQueryService.create(history, ip);
-
     const resultado = {
       message: 'Consulta realizada com suceso',
       Success: true,
       resultado: result,
     };
+
+    const history: CreateHistoryOfQueryDto = {
+      id_tipo_consulta: createFindCnpjDto.id_tipo_consulta,
+      codigo: prefix,
+      conjunto_dados: createFindCnpjDto.pesquisar.toString(),
+      custo: cost,
+      consultado_por: user.userId,
+      tipo_dado: createFindCnpjDto.tipo_dado,
+      chave: createFindCnpjDto.cnpj,
+      resultado: JSON.stringify(resultado),
+    };
+
+    console.log('\n\n history', history);
+
+    const savedHistory = await this.historyOfQueryService.create(history, ip);
+
     return { resultado: resultado, savedHistory: savedHistory };
   }
 }

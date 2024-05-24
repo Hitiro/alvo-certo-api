@@ -20,6 +20,7 @@ export class HistoryOfQueryService {
       ...createHistoryOfQueryDto,
       ip_origem: ip,
     });
+    console.log('\n\n data', data);
     const history = await this.historyOfQuery.save(data);
     return history;
   }

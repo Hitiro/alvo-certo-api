@@ -9,8 +9,8 @@ import {
 export class CreateFindCnpjDto {
   @IsString()
   @IsNotEmpty()
-  @Length(11, 14)
-  cpfcnpj: string;
+  @Length(14)
+  cnpj: string;
 
   @IsArray()
   @IsNotEmpty()
@@ -19,6 +19,10 @@ export class CreateFindCnpjDto {
   @IsNumber()
   @IsNotEmpty()
   id_tipo_consulta: number;
+
+  @IsString()
+  @IsNotEmpty()
+  tipo_dado: string;
 }
 
 // TODO: Tratar no banco de dados.
