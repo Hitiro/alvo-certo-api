@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ExtractOfUserService } from './extract-of-user.service';
-import { Roles } from 'src/infra/decorators/roles.decorator';
-import { Role } from 'src/infra/enums/role.enum';
+import { Roles } from 'infra/decorators/roles.decorator';
+import { Role } from 'infra/enums/role.enum';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUserId } from 'src/infra/decorators/get-user.decorator';
+import { GetUserId } from 'infra/decorators/get-user.decorator';
 import { AddAmountUser } from './dto/balance-extract-of-user.dto';
-import { GetIpAddress } from 'src/infra/decorators/get-ip-origin';
+import { GetIpAddress } from 'infra/decorators/get-ip-origin.decorator';
 
 @Controller('extract-of-user')
 @UseGuards(AuthGuard('jwt'))
@@ -13,8 +13,9 @@ export class ExtractOfUserController {
   constructor(private readonly extractOfUserService: ExtractOfUserService) {}
 
   @Get()
-  @Roles(Role.Admin, Role.SuperAdmin)
+  @Roles(Role.User, Role.Admin, Role.SuperAdmin)
   findAll(@GetUserId() user) {
+    console.log(user);
     return this.extractOfUserService.findAll();
   }
 
@@ -35,7 +36,7 @@ export class ExtractOfUserController {
 
   @Get('user/:id')
   @Roles(Role.Admin, Role.SuperAdmin)
-  findByUser(@Param('id') id: number) {
-    return this.extractOfUserService.findByUser(id);
+  findByUser(@Param('id') email: string) {
+    return this.extractOfUserService.findByUser(email);
   }
 }

@@ -12,6 +12,7 @@ export class TypeOfQueryService {
     private readonly typeOfQuery: Repository<TypeOfQuery>,
   ) {}
   create(createTypeOfQueryDto: CreateTypeOfQueryDto) {
+    console.log(createTypeOfQueryDto);
     return 'This action adds a new typeOfQuery';
   }
 
@@ -24,6 +25,7 @@ export class TypeOfQueryService {
   }
 
   update(id: number, updateTypeOfQueryDto: UpdateTypeOfQueryDto) {
+    console.log(updateTypeOfQueryDto);
     return `This action updates a #${id} typeOfQuery`;
   }
 

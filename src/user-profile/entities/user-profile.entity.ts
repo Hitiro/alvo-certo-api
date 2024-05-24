@@ -1,13 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { User } from 'src/users/entities/user.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-  OneToOne,
-} from 'typeorm';
+
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity({ name: 'tb_perfil_usuario' })
 export class UserProfile {
@@ -57,11 +50,4 @@ export class UserProfile {
 
   @Column()
   user_id: number;
-
-  @OneToOne(() => User, (user) => user.id, {
-    cascade: true,
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
 }

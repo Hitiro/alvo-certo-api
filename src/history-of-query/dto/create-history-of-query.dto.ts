@@ -7,7 +7,7 @@ export class CreateHistoryOfQueryDto {
 
   @IsNotEmpty()
   @IsString()
-  chave: string;
+  codigo: string;
 
   @IsNotEmpty()
   @IsString()
@@ -20,4 +20,16 @@ export class CreateHistoryOfQueryDto {
   @IsNotEmpty()
   @IsNumber()
   consultado_por: number;
+
+  @IsNotEmpty()
+  @IsString()
+  tipo_dado: string;
+
+  @IsNotEmpty()
+  @IsString()
+  chave: string;
+
+  @IsNotEmpty()
+  @IsString()
+  resultado: string;
 }

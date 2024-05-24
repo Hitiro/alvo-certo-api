@@ -1,11 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { CreateHistoryOfQueryDto } from './dto/create-history-of-query.dto';
 import { UpdateHistoryOfQueryDto } from './dto/update-history-of-query.dto';
+import { Repository } from 'typeorm';
+import { HistoryOfQuery } from './entities/history-of-query.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class HistoryOfQueryService {
-  create(createHistoryOfQueryDto: CreateHistoryOfQueryDto) {
-    return 'This action adds a new historyOfQuery';
+  constructor(
+    @InjectRepository(HistoryOfQuery)
+    private readonly historyOfQuery: Repository<HistoryOfQuery>,
+  ) {}
+
+  async create(
+    createHistoryOfQueryDto: CreateHistoryOfQueryDto,
+    ip: string,
+  ): Promise<HistoryOfQuery> {
+    const data = await this.historyOfQuery.create({
+      ...createHistoryOfQueryDto,
+      ip_origem: ip,
+    });
+    console.log('\n\n data', data);
+    const history = await this.historyOfQuery.save(data);
+    return history;
   }
 
   findAll() {
@@ -17,6 +34,7 @@ export class HistoryOfQueryService {
   }
 
   update(id: number, updateHistoryOfQueryDto: UpdateHistoryOfQueryDto) {
+    console.log(updateHistoryOfQueryDto);
     return `This action updates a #${id} historyOfQuery`;
   }
 

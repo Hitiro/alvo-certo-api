@@ -13,7 +13,7 @@ export class HistoryOfQuery {
 
   @Column()
   @ApiProperty()
-  chave: string;
+  codigo: string;
 
   @Column()
   @ApiProperty()
@@ -26,4 +26,20 @@ export class HistoryOfQuery {
   @Column()
   @ApiProperty()
   consultado_por: number;
+
+  @Column()
+  @ApiProperty()
+  ip_origem: string;
+
+  @Column()
+  @ApiProperty()
+  tipo_dado: string;
+
+  @Column()
+  @ApiProperty()
+  chave: string;
+
+  @Column()
+  @ApiProperty()
+  resultado: string;
 }
