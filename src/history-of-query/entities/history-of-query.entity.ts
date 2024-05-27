@@ -42,4 +42,8 @@ export class HistoryOfQuery {
   @Column()
   @ApiProperty()
   resultado: string;
+
+  @Column()
+  @ApiProperty()
+  data: Date;
 }
