@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CreateHistoryOfQueryDto } from './dto/create-history-of-query.dto';
-import { UpdateHistoryOfQueryDto } from './dto/update-history-of-query.dto';
 import { Repository } from 'typeorm';
 import { HistoryOfQuery } from './entities/history-of-query.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ShowUserDto } from 'users/dto/show-user.dto';
+import { ShowHistoryOfQueryDto } from './dto/show-history-of-query.dto';
 
 @Injectable()
 export class HistoryOfQueryService {
@@ -20,25 +21,22 @@ export class HistoryOfQueryService {
       ...createHistoryOfQueryDto,
       ip_origem: ip,
     });
-    console.log('\n\n data', data);
     const history = await this.historyOfQuery.save(data);
     return history;
   }
 
-  findAll() {
-    return `This action returns all historyOfQuery`;
+  async findAll(user: ShowUserDto) {
+    const result: ShowHistoryOfQueryDto[] = await this.historyOfQuery.find({
+      where: { consultado_por: user.userId },
+      order: { id: 'DESC' },
+    });
+    return result;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} historyOfQuery`;
-  }
-
-  update(id: number, updateHistoryOfQueryDto: UpdateHistoryOfQueryDto) {
-    console.log(updateHistoryOfQueryDto);
-    return `This action updates a #${id} historyOfQuery`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} historyOfQuery`;
+  async findOne(id: number, user: ShowUserDto) {
+    const result: ShowHistoryOfQueryDto = await this.historyOfQuery.findOne({
+      where: { consultado_por: user.userId, id: id },
+    });
+    return result;
   }
 }
