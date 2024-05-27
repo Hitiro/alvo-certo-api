@@ -30,6 +30,7 @@
 
 ```bash
 $ npm install
+$ docker compose-up
 ```
 
 ## Running the app
@@ -58,8 +59,8 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-##
-(43) 9.9942-6105
+## WhatsApp do Desenvolvedor
+(43) 9.9942-6105 (wa.me/5543999426105)
 
 ## Support
 
