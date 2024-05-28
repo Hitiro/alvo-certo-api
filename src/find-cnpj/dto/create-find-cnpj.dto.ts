@@ -47,3 +47,32 @@ export enum searchFields {
   MUNICIPIO,
   UF,
 }
+
+export const groupSearchFields = {
+  BASICO: {
+    'NOME FANTASIA': searchFields['NOME FANTASIA'],
+    'RAZAO SOCIAL': searchFields['RAZAO SOCIAL'],
+    CNPJ: searchFields.CNPJ,
+    STATUS: searchFields.STATUS,
+    SETOR: searchFields.SETOR,
+  },
+  CNAE: {
+    'CNAE PRINCIPAL DESCRICAO': searchFields['CNAE PRINCIPAL DESCRICAO'],
+    'CNAE PRINCIPAL CODIGO': searchFields['CNAE PRINCIPAL CODIGO'],
+  },
+  CONTATO: {
+    DDD: searchFields.DDD,
+    TELEFONE: searchFields.TELEFONE,
+    EMAIL: searchFields.EMAIL,
+  },
+  ENDERECO: {
+    CEP: searchFields.CEP,
+    'TIPO LOGRADOURO': searchFields['TIPO LOGRADOURO'],
+    LOGRADOURO: searchFields.LOGRADOURO,
+    NUMERO: searchFields.NUMERO,
+    COMPLEMENTO: searchFields.COMPLEMENTO,
+    BAIRRO: searchFields.BAIRRO,
+    MUNICIPIO: searchFields.MUNICIPIO,
+    UF: searchFields.UF,
+  },
+};

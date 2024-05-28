@@ -34,7 +34,7 @@ export class ExtractOfUserController {
     return this.extractOfUserService.findOne(id);
   }
 
-  @Get('user/:id')
+  @Get('user/:email')
   @Roles(Role.Admin, Role.SuperAdmin)
   findByUser(@Param('id') email: string) {
     return this.extractOfUserService.findByUser(email);

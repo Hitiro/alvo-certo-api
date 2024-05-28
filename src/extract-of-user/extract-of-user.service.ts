@@ -71,7 +71,7 @@ export class ExtractOfUserService {
       order: { id: 'DESC' },
     });
 
-    return `${existingExtracts}`;
+    return existingExtracts;
   }
 
   async getCurrentBalance(userId: number): Promise<number> {

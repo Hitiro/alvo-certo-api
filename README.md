@@ -30,6 +30,8 @@
 
 ```bash
 $ npm install
+
+#Configurar o Docker com o Postgres
 $ docker compose-up
 ```
 
@@ -60,7 +62,7 @@ $ npm run test:cov
 ```
 
 ## WhatsApp do Desenvolvedor
-(43) 9.9942-6105 (wa.me/5543999426105)
+(43) 9.9942-6105 [Fale comigo =)](wa.me/5543999426105)
 
 ## Support
 
