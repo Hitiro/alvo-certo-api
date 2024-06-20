@@ -39,7 +39,7 @@ export class CreateTriggerAfterInsertHistoricoConsulta1716289300149
           saldo_anterior - NEW.custo,
           NEW.consultado_por
         );
-        
+
         RETURN NEW;
       END;
       $$ LANGUAGE plpgsql;

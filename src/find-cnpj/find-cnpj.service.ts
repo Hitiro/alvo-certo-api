@@ -53,7 +53,7 @@ export class FindCnpjService {
 
     if (saldo < cost) {
       throw new HttpException(
-        'Você não possui saldo suficiente para essa Busca.',
+        `Você não possui saldo suficiente para essa Busca. \n Saldo: ${saldo} \n Custo: ${cost}`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -88,7 +88,7 @@ export class FindCnpjService {
 
     const resultado = {
       message: 'Consulta realizada com suceso',
-      Success: true,
+      success: true,
       resultado: result,
     };
 
@@ -102,8 +102,6 @@ export class FindCnpjService {
       chave: createFindCnpjDto.cnpj,
       resultado: JSON.stringify(resultado),
     };
-
-    console.log('\n\n history', history);
 
     const savedHistory = await this.historyOfQueryService.create(history, ip);
 

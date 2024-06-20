@@ -1,8 +1,4 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-console.log(
-  '\n\n\n Inicio da execução da Migration CreateUsersTable1657222882811',
-);
-
 export class CreateUsersTable1715314052776 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     const exists = await queryRunner.hasTable(
