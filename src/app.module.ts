@@ -14,6 +14,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypeOfQueryModule } from './type-of-query/type-of-query.module';
 import { HistoryOfQueryModule } from './history-of-query/history-of-query.module';
 import { ExtractOfUserModule } from './extract-of-user/extract-of-user.module';
+import { AuthenticationModule } from 'brick-api/authentication/authentication.module';
+import { FindCpfModule } from 'brick-api/find-cpf/find-cpf.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { ExtractOfUserModule } from './extract-of-user/extract-of-user.module';
     TypeOfQueryModule,
     HistoryOfQueryModule,
     ExtractOfUserModule,
+    AuthenticationModule,
+    FindCpfModule,
   ],
   controllers: [AppController],
   providers: [
