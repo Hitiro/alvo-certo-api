@@ -21,6 +21,7 @@ export class AuthController {
       const { user, token } = await this.authService.login(loginUserDto);
       return { user, token };
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         'Erro durante o login',
         HttpStatus.INTERNAL_SERVER_ERROR,

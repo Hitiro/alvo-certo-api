@@ -3,14 +3,14 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreateUserDto {
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ example: 'Hitiro Tsugawa' })
   name: string;
 
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ examples: ['hitiro@live.com', 'hitiro.tecnico@gmail.com'] })
   email: string;
 
   @IsNotEmpty()
-  @ApiProperty()
+  @ApiProperty({ example: '********' })
   password: string;
 }
