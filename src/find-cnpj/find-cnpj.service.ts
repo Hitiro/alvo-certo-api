@@ -8,11 +8,11 @@ import {
   Injectable,
   Logger,
 } from '@nestjs/common';
-import { CreateFindCnpjDto, searchFields } from './dto/create-find-cnpj.dto';
+import { CreateFindCnpjDto } from './dto/create-find-cnpj.dto';
 import { catchError, firstValueFrom, map } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 import { AxiosError } from 'axios';
-import { Resultado } from './dto/response-cnpj.dto';
+// import { Resultado } from './dto/response-cnpj.dto';
 import { TypeOfQueryService } from 'type-of-query/type-of-query.service';
 import { ShowUserDto } from 'users/dto/show-user.dto';
 
@@ -32,9 +32,6 @@ export class FindCnpjService {
     ip: string,
   ) {
     const cnpj = createFindCnpjDto.cnpj;
-    const selectedFields = createFindCnpjDto.pesquisar.map(
-      (field) => searchFields[field],
-    );
 
     if (!cnpj || cnpj.length !== 14) return 'CNPJ Inválido';
 
@@ -60,27 +57,35 @@ export class FindCnpjService {
 
     const result = await firstValueFrom(
       this.httpService
-        .get(`https://api-publica.speedio.com.br/buscarcnpj?cnpj=${cnpj}`)
+        .get(`https://consulta-cnpj-gratis.p.rapidapi.com/office/${cnpj}`, {
+          params: {
+            simples: 'true',
+          },
+          headers: {
+            'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
+            'X-RapidAPI-Host': 'consulta-cnpj-gratis.p.rapidapi.com',
+          },
+        })
         .pipe(
           map((result) => {
-            const resultData: Resultado = result.data;
+            // const resultData: Resultado = result.data;
 
-            const filteredResponse: Partial<Resultado> = {};
-            for (const field of selectedFields) {
-              if (resultData[field]) {
-                filteredResponse[field] = resultData[field];
-              } else {
-                filteredResponse[field] = '';
-              }
-            }
-            return filteredResponse;
+            // const filteredResponse: Partial<Resultado> = {};
+            // for (const field of selectedFields) {
+            //   if (resultData[field]) {
+            //     filteredResponse[field] = resultData[field];
+            //   } else {
+            //     filteredResponse[field] = '';
+            //   }
+            // }
+            console.log(result.data);
+            return result.data;
           }),
           catchError(async (error: AxiosError) => {
             this.logger.error(error);
             throw new BadRequestException({
-              Message: 'Erro ao pesquisar buscar CNPJ',
+              message: 'Erro ao atualizar buscar CNPJ',
               MessageError: error.message,
-              Success: false,
             });
           }),
         ),
@@ -100,7 +105,8 @@ export class FindCnpjService {
       consultado_por: user.userId,
       tipo_dado: createFindCnpjDto.tipo_dado,
       chave: createFindCnpjDto.cnpj,
-      resultado: JSON.stringify(resultado),
+      // resultado: JSON.stringify(resultado),
+      resultado: resultado,
     };
 
     const savedHistory = await this.historyOfQueryService.create(history, ip);
@@ -108,25 +114,3 @@ export class FindCnpjService {
     return { resultado: resultado, savedHistory: savedHistory };
   }
 }
-
-// const result = await firstValueFrom(
-//   this.httpService
-//     .get(`https://consulta-cnpj-gratis.p.rapidapi.com/office/${cnpj}`, {
-//       params: {
-//         simples: 'true',
-//       },
-//       headers: {
-//         'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
-//         'X-RapidAPI-Host': 'consulta-cnpj-gratis.p.rapidapi.com',
-//       },
-//     })
-//     .pipe(
-//       catchError(async (error: AxiosError) => {
-//         this.logger.error(error);
-//         throw new BadRequestException({
-//           message: 'Erro ao atualizar buscar CNPJ',
-//           MessageError: error.message,
-//         });
-//       }),
-//     ),
-// );
