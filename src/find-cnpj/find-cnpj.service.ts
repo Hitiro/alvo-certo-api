@@ -105,8 +105,7 @@ export class FindCnpjService {
       consultado_por: user.userId,
       tipo_dado: createFindCnpjDto.tipo_dado,
       chave: createFindCnpjDto.cnpj,
-      // resultado: JSON.stringify(resultado),
-      resultado: resultado,
+      resultado: JSON.stringify(resultado),
     };
 
     const savedHistory = await this.historyOfQueryService.create(history, ip);
