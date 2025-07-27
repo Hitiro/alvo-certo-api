@@ -31,7 +31,7 @@ jobs:
         id: next_version
         run: |
           CURRENT_TAG=${{ steps.get_tag.outputs.current_tag }}
-          VERSION_NUMBER=$(echo $CURRENT_TAG | sed 's/^v//' | sed 's/-desenvolvimento$//')
+          VERSION_NUMBER=$(echo $CURRENT_TAG | sed 's/^v//' | sed 's/-.*$//')
 
           # Quebra a versão em partes (major.minor.patch)
           IFS='.' read -r -a VERSION_PARTS <<< "$VERSION_NUMBER"
