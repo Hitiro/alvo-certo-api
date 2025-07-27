@@ -1,0 +1,52 @@
+name: Automated version bump develop #Automatizando versão de Deseenvolvimeento.
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - develop ##Executa ao feerar uma PR para a develop
+
+jobs:
+  bump-version:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 #Busca todas as tags e commits.
+
+      - name: Get latest tag on develop #Busca a ultima tag da branch develop
+        id: get_tag
+        run: |
+          LATEST_TAG=$(git describe --tags --match "v*.*.*-develop" --abbrev=0 || git describe --tags --match "v*.*.*" --abbrev=0 || echo "v0.0.0-develop")
+          echo "Current latest tag: $LATEST_TAG"
+          echo "current_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+
+      - name: Determine next version
+        id: next_version
+        run: |
+          CURRENT_TAG=${{ steps.get_tag.outputs.current_tag }}
+          VERSION_NUMBER=$(echo $CURRENT_TAG | sed 's/^v//' | sed 's/-desenvolvimento$//')
+
+          # Quebra a versão em partes (major.minor.patch)
+          IFS='.' read -r -a VERSION_PARTS <<< "$VERSION_NUMBER"
+          MAJOR=${VERSION_PARTS[0]}
+          MINOR=${VERSION_PARTS[1]}
+          PATCH=${VERSION_PARTS[2]}
+
+          NEXT_PATCH=$((PATCH + 1)) #Incrementa o patch
+          NEXT_VERSION="v$MAJOR.$MINOR.$NEXT_PATCH-desenvolvimento"
+
+          echo "Next version: $NEXT_VERSION"
+          echo "new_tag=$NEXT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create and Push new Tag #Cria a nova tag e faz o push
+        run: |
+          NEW_TAG=${{ steps.next_version.outputs.new_tag }}
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a $NEW_TAG -m "Auto-bumped version to $NEW_TAG on desenvolvimento merge"
+          git push origin $NEW_TAG
