@@ -1,0 +1,61 @@
+# .github/workflows/version-bump-master.yml
+name: Auto Bump Version on Master Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master # Escuta eventos de PR fechado na branch 'master'
+
+jobs:
+  bump_version:
+    if: github.event.pull_request.merged == true # Garante que o PR foi de fato mesclado
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Permissão necessária para criar e pushar tags
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necessário para buscar todas as tags e histórico
+
+      - name: Get latest global tag (vX.Y.Z)
+        id: get_tag
+        run: |
+          # Procura a tag global mais recente no formato vX.Y.Z
+          # Se não encontrar, começa de v0.0.0.
+          LATEST_GLOBAL_TAG=$(git describe --tags --match "v*.*.*" --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "Current latest global tag: $LATEST_GLOBAL_TAG"
+          echo "current_tag=$LATEST_GLOBAL_TAG" >> $GITHUB_OUTPUT
+
+      - name: Determine next version for Master
+        id: next_version
+        run: |
+          CURRENT_TAG=${{ steps.get_tag.outputs.current_tag }}
+          # Remove o prefixo 'v'
+          VERSION_NUMBER=$(echo $CURRENT_TAG | sed 's/^v//')
+
+          # Quebra a versão em partes (major.minor.patch)
+          IFS='.' read -r -a VERSION_PARTS <<< "$VERSION_NUMBER"
+          MAJOR=${VERSION_PARTS[0]} # Incrementa o Master (X)
+          MINOR=${VERSION_PARTS[1]} # Zera o Homolog (Y)
+          PATCH=${VERSION_PARTS[2]} # Zera o Develop (Z)
+
+          # Implementa sua regra: incrementa MAJOR (X), zera MINOR (Y) e PATCH (Z)
+          NEXT_MAJOR=$((MAJOR + 1))
+          NEXT_MINOR=0 # Zera o MINOR / Homolog
+          NEXT_PATCH=0 # Zera o PATCH / Develop
+
+          NEXT_VERSION="v$NEXT_MAJOR.$NEXT_MINOR.$NEXT_PATCH"
+
+          echo "Next version: $NEXT_VERSION"
+          echo "new_tag=$NEXT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create and Push new tag
+        run: |
+          NEW_TAG=${{ steps.next_version.outputs.new_tag }}
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a $NEW_TAG -m "Auto-bumped version to $NEW_TAG on master merge"
+          git push origin $NEW_TAG
