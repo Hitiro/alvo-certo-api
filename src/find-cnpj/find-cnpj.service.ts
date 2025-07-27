@@ -78,7 +78,6 @@ export class FindCnpjService {
             //     filteredResponse[field] = '';
             //   }
             // }
-            console.log(result.data);
             return result.data;
           }),
           catchError(async (error: AxiosError) => {
